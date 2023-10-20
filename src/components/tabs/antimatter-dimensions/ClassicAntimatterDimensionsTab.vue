@@ -29,6 +29,14 @@ export default {
       multiplierText: ""
     };
   },
+  computed: {
+    randomTier() {
+      return ADevil.randomDimTier("antimatter");
+    },
+    swap() {
+      return Math.floor(Math.random() * 2) === 0;
+    },
+  },
   methods: {
     update() {
       this.hasDimensionBoosts = player.dimensionBoosts > 0;
@@ -56,12 +64,14 @@ export default {
     <TickspeedRow />
     <div class="l-dimensions-container">
       <AntimatterDimensionRow
-        v-for="tier in 8"
+        v-for="tier in randomTier"
         :key="tier"
         :tier="tier"
       />
-      <DimensionBoostRow />
-      <AntimatterGalaxyRow />
+      <span v-if="swap"><DimensionBoostRow /></span>
+      <span v-else><AntimatterGalaxyRow /></span>
+      <span v-if="swap"><AntimatterGalaxyRow /></span>
+      <span v-else><DimensionBoostRow /></span>
     </div>
     <PrimaryButton
       v-if="isQuickResetAvailable"

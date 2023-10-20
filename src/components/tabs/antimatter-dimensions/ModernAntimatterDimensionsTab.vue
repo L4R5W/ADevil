@@ -36,6 +36,12 @@ export default {
     sacrificeTooltip() {
       return `Boosts 8th Antimatter Dimension by ${formatX(this.sacrificeBoost, 2, 2)}`;
     },
+    randomTier() {
+      return ADevil.randomDimTier("antimatter");
+    },
+    swap() {
+      return Math.floor(Math.random() * 2) === 0;
+    },
   },
   methods: {
     maxAll() {
@@ -125,13 +131,14 @@ export default {
     <TickspeedRow />
     <div class="l-dimensions-container">
       <AntimatterDimensionRow
-        v-for="tier in 8"
+        v-for="tier in randomTier"
         :key="tier"
         :tier="tier"
       />
     </div>
     <div class="resets-container">
-      <DimensionBoostRow />
+      <span v-if="swap"><DimensionBoostRow /></span>
+      <span v-else><AntimatterGalaxyRow /></span>
       <PrimaryButton
         v-if="isQuickResetAvailable"
         class="o-primary-btn--quick-reset"
@@ -141,7 +148,8 @@ export default {
         <span v-if="hasDimensionBoosts"> but lose a Dimension Boost</span>
         <span v-else> for no gain</span>
       </PrimaryButton>
-      <AntimatterGalaxyRow />
+      <span v-if="swap"><AntimatterGalaxyRow /></span>
+      <span v-else><DimensionBoostRow /></span>
     </div>
     <AntimatterDimensionProgressBar />
   </div>

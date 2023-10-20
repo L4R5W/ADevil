@@ -49,7 +49,7 @@ export const ADevil = {
       cl1, cl2, cl3, cl4
     ];
   },
-  canBuyUpgrade(array) {
+  canBuyInfUpgrade(array) {
     const upgrades = player.ADevil.infUpgGridNames;
 
     let numbor = 0;
@@ -66,5 +66,28 @@ export const ADevil = {
     }
     if (InfinityUpgrade.all.filter(u => upgradesToCheck.includes(u.id) && u.isBought).length === numbor - rangeLow) return true;
     return false;
+  },
+  randomDimTier(dimType) {
+    const result = [];
+    let unlockedTier = 0;
+    if (dimType === "antimatter") {
+      for (let i = 0; i < 8; i++) {
+        if (AntimatterDimensions.all[i].isAvailableForPurchase) unlockedTier += 1;
+      }
+    }
+    if (dimType === "infinity") {
+      for (let i = 0; i < 8; i++) {
+        if (InfinityDimensions.all[i].isUnlocked) unlockedTier += 1;
+      }
+    }
+    if (dimType === "time") {
+      for (let i = 0; i < 8; i++) {
+        if (TimeDimensions.all[i].isUnlocked) unlockedTier += 1;
+      }
+    }
+    for (let i = 0; i < unlockedTier; i++) {
+      result.push(1 + Math.floor(Math.random() * unlockedTier));
+    }
+    return result;
   }
 };

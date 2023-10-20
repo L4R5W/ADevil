@@ -1,6 +1,9 @@
 <script>
 import { DC } from "@/core/constants";
 
+import wordShift from "@/core/word-shift";
+
+
 export default {
   name: "AntimatterDimensionProgressBar",
   data() {
@@ -22,12 +25,12 @@ export default {
     update() {
       this.displayPercents = formatPercents(this.fill, 2);
       const setProgress = (current, goal, tooltip) => {
-        this.fill = Math.clampMax(current.pLog10() / Decimal.log10(goal), 1);
-        this.tooltip = tooltip;
+        this.fill = Math.random();
+        this.tooltip = wordShift.randomCrossWords(tooltip);
       };
       const setLinearProgress = (current, goal, tooltip) => {
-        this.fill = Math.clampMax(current / goal, 1);
-        this.tooltip = tooltip;
+        this.fill = Math.random();
+        this.tooltip = wordShift.randomCrossWords(tooltip);
       };
 
       // Goals for challenges and challenge-like runs should come first because numbers will always be much smaller

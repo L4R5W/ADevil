@@ -2503,7 +2503,7 @@ br {
   width: 0;
 
   /* Align percents on center */
-  text-align: center;
+  text-align: left;
   background-color: #127a20;
   border-radius: inherit;
   transition-duration: 0.1s;
@@ -2511,6 +2511,7 @@ br {
 }
 
 .c-progress-bar__percents {
+  margin-left: 1rem;
   overflow-wrap: normal;
   font-size: 1.6rem;
   color: black;
