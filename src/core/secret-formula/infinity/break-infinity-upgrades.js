@@ -2,10 +2,11 @@ import { DC } from "../../constants";
 
 function rebuyable(config) {
   const effectFunction = config.effect || (x => x);
-  const { id, maxUpgrades, description, isDisabled, noLabel, onPurchased } = config;
+  const { id, uniqueID, maxUpgrades, description, isDisabled, noLabel, onPurchased } = config;
   return {
     rebuyable: true,
     id,
+    uniqueID,
     cost: () => config.initialCost * Math.pow(config.costIncrease, player.infinityRebuyables[config.id]),
     maxUpgrades,
     description,
@@ -29,6 +30,7 @@ function rebuyable(config) {
 export const breakInfinityUpgrades = {
   totalAMMult: {
     id: "totalMult",
+    uniqueID: "breakUpgrade1",
     cost: 1e4,
     description: "Antimatter Dimensions gain a multiplier based on total antimatter produced",
     effect: () => Math.pow(player.records.totalAntimatter.exponent + 1, 0.5),
@@ -36,6 +38,7 @@ export const breakInfinityUpgrades = {
   },
   currentAMMult: {
     id: "currentMult",
+    uniqueID: "breakUpgrade2",
     cost: 5e4,
     description: "Antimatter Dimensions gain a multiplier based on current antimatter",
     effect: () => Math.pow(Currency.antimatter.exponent + 1, 0.5),
@@ -43,12 +46,14 @@ export const breakInfinityUpgrades = {
   },
   galaxyBoost: {
     id: "postGalaxy",
+    uniqueID: "breakUpgrade3",
     cost: 5e11,
     description: () => `All Galaxies are ${formatPercents(0.5)} stronger`,
     effect: 1.5
   },
   infinitiedMult: {
     id: "infinitiedMult",
+    uniqueID: "breakUpgrade4",
     cost: 1e5,
     description: "Antimatter Dimensions gain a multiplier based on Infinities",
     effect: () => 1 + Currency.infinitiesTotal.value.pLog10() * 10,
@@ -56,6 +61,7 @@ export const breakInfinityUpgrades = {
   },
   achievementMult: {
     id: "achievementMult",
+    uniqueID: "breakUpgrade5",
     cost: 1e6,
     description: "Additional multiplier to Antimatter Dimensions based on Achievements completed",
     effect: () => Math.max(Math.pow((Achievements.effectiveCount - 30), 3) / 40, 1),
@@ -63,6 +69,7 @@ export const breakInfinityUpgrades = {
   },
   slowestChallengeMult: {
     id: "challengeMult",
+    uniqueID: "breakUpgrade6",
     cost: 1e7,
     description: "Antimatter Dimensions gain a multiplier based on slowest challenge run",
     effect: () => Decimal.clampMin(50 / Time.worstChallenge.totalMinutes, 1),
@@ -72,6 +79,7 @@ export const breakInfinityUpgrades = {
   },
   infinitiedGen: {
     id: "infinitiedGeneration",
+    uniqueID: "breakUpgrade7",
     cost: 2e7,
     description: "Passively generate Infinities based on your fastest Infinity",
     effect: () => player.records.bestInfinity.time,
@@ -92,16 +100,19 @@ export const breakInfinityUpgrades = {
   },
   autobuyMaxDimboosts: {
     id: "autobuyMaxDimboosts",
+    uniqueID: "breakUpgrade8",
     cost: 5e9,
     description: "Unlock the buy max Dimension Boost Autobuyer mode"
   },
   autobuyerSpeed: {
     id: "autoBuyerUpgrade",
+    uniqueID: "breakUpgrade9",
     cost: 1e15,
     description: "Autobuyers unlocked or improved by Normal Challenges work twice as fast"
   },
   tickspeedCostMult: rebuyable({
     id: 0,
+    uniqueID: "breakRebuyable1",
     initialCost: 1e6,
     costIncrease: 5,
     maxUpgrades: 8,
@@ -115,6 +126,7 @@ export const breakInfinityUpgrades = {
   }),
   dimCostMult: rebuyable({
     id: 1,
+    uniqueID: "breakRebuyable2",
     initialCost: 1e7,
     costIncrease: 5e3,
     maxUpgrades: 7,
@@ -128,6 +140,7 @@ export const breakInfinityUpgrades = {
   }),
   ipGen: rebuyable({
     id: 2,
+    uniqueID: "breakRebuyable3",
     initialCost: 1e7,
     costIncrease: 10,
     maxUpgrades: 10,

@@ -23,6 +23,7 @@ function rebuyable(config) {
 export const dilationUpgrades = {
   dtGain: rebuyable({
     id: 1,
+    uniqueID: "dilationRebuyable1",
     initialCost: 1e4,
     increment: 10,
     description: () =>
@@ -49,6 +50,7 @@ export const dilationUpgrades = {
   }),
   galaxyThreshold: rebuyable({
     id: 2,
+    uniqueID: "dilationRebuyable2",
     initialCost: 1e6,
     increment: 100,
     description: () =>
@@ -68,6 +70,7 @@ export const dilationUpgrades = {
   }),
   tachyonGain: rebuyable({
     id: 3,
+    uniqueID: "dilationRebuyable3",
     initialCost: 1e7,
     increment: 20,
     description: () => {
@@ -86,12 +89,14 @@ export const dilationUpgrades = {
   }),
   doubleGalaxies: {
     id: 4,
+    uniqueID: "dilationUpgrade1",
     cost: 5e6,
     description: () => `Gain twice as many Tachyon Galaxies, up to ${formatInt(500)} base Galaxies`,
     effect: 2
   },
   tdMultReplicanti: {
     id: 5,
+    uniqueID: "dilationUpgrade2",
     cost: 1e9,
     description: () => {
       const rep10 = replicantiMult().pLog10();
@@ -114,6 +119,7 @@ export const dilationUpgrades = {
   },
   ndMultDT: {
     id: 6,
+    uniqueID: "dilationUpgrade3",
     cost: 5e7,
     description: "Antimatter Dimension multiplier based on Dilated Time, unaffected by Time Dilation",
     effect: () => Currency.dilatedTime.value.pow(308).clampMin(1),
@@ -121,6 +127,7 @@ export const dilationUpgrades = {
   },
   ipMultDT: {
     id: 7,
+    uniqueID: "dilationUpgrade4",
     cost: 2e12,
     description: "Gain a multiplier to Infinity Points based on Dilated Time",
     effect: () => Currency.dilatedTime.value.pow(1000).clampMin(1),
@@ -129,17 +136,20 @@ export const dilationUpgrades = {
   },
   timeStudySplit: {
     id: 8,
+    uniqueID: "dilationUpgrade5",
     cost: 1e10,
     description: "You can buy all three Time Study paths from the Dimension Split"
   },
   dilationPenalty: {
     id: 9,
+    uniqueID: "dilationUpgrade6",
     cost: 1e11,
     description: () => `Reduce the Dilation penalty (${formatPow(1.05, 2, 2)} after reduction)`,
     effect: 1.05,
   },
   ttGenerator: {
     id: 10,
+    uniqueID: "dilationUpgrade7",
     cost: 1e15,
     description: "Generate Time Theorems based on Tachyon Particles",
     effect: () => Currency.tachyonParticles.value.div(20000),
@@ -147,6 +157,7 @@ export const dilationUpgrades = {
   },
   dtGainPelle: rebuyable({
     id: 11,
+    uniqueID: "dilationRebuyable4",
     initialCost: 1e14,
     increment: 100,
     pelleOnly: true,
@@ -158,6 +169,7 @@ export const dilationUpgrades = {
   }),
   galaxyMultiplier: rebuyable({
     id: 12,
+    uniqueID: "dilationRebuyable5",
     initialCost: 1e15,
     increment: 1000,
     pelleOnly: true,
@@ -169,6 +181,7 @@ export const dilationUpgrades = {
   }),
   tickspeedPower: rebuyable({
     id: 13,
+    uniqueID: "dilationRebuyable6",
     initialCost: 1e16,
     increment: 1e4,
     pelleOnly: true,
@@ -180,6 +193,7 @@ export const dilationUpgrades = {
   }),
   galaxyThresholdPelle: {
     id: 14,
+    uniqueID: "dilationUpgrade8",
     cost: 1e45,
     pelleOnly: true,
     description: "Apply a cube root to the Tachyon Galaxy threshold",
@@ -187,6 +201,7 @@ export const dilationUpgrades = {
   },
   flatDilationMult: {
     id: 15,
+    uniqueID: "dilationUpgrade9",
     cost: 1e55,
     pelleOnly: true,
     description: () => `Gain more Dilated Time based on current EP`,

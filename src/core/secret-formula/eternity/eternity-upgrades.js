@@ -3,6 +3,7 @@ import { DC } from "../../constants";
 export const eternityUpgrades = {
   idMultEP: {
     id: 1,
+    uniqueID: "eternityUpgrade1",
     cost: 5,
     description: () => `Infinity Dimensions multiplier based on unspent Eternity Points (x+${formatInt(1)})`,
     effect: () => Currency.eternityPoints.value.plus(1),
@@ -10,6 +11,7 @@ export const eternityUpgrades = {
   },
   idMultEternities: {
     id: 2,
+    uniqueID: "eternityUpgrade2",
     cost: 10,
     description: () => `Infinity Dimension multiplier based on Eternities
       ((x/${formatInt(200)})^log4(${formatInt(2)}x), softcap at ${format(1e5)} Eternities)`,
@@ -29,6 +31,7 @@ export const eternityUpgrades = {
   },
   idMultICRecords: {
     id: 3,
+    uniqueID: "eternityUpgrade3",
     cost: 5e4,
     description: "Infinity Dimensions multiplier based on sum of Infinity Challenge times",
     // The cap limits this at a lower value, but we also need an explicit cap here because very old versions have
@@ -39,6 +42,7 @@ export const eternityUpgrades = {
   },
   tdMultAchs: {
     id: 4,
+    uniqueID: "eternityUpgrade4",
     cost: 1e16,
     description: "Your Achievement bonus affects Time Dimensions",
     effect: () => Achievements.power,
@@ -46,6 +50,7 @@ export const eternityUpgrades = {
   },
   tdMultTheorems: {
     id: 5,
+    uniqueID: "eternityUpgrade5",
     cost: 1e40,
     description: "Time Dimensions are multiplied by your unspent Time Theorems",
     effect: () => Decimal.max(Currency.timeTheorems.value, 1),
@@ -53,6 +58,7 @@ export const eternityUpgrades = {
   },
   tdMultRealTime: {
     id: 6,
+    uniqueID: "eternityUpgrade6",
     cost: 1e50,
     description: () => (Pelle.isDoomed
       ? "Time Dimensions are multiplied by days played in this Armageddon"

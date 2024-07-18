@@ -10,6 +10,7 @@ function chargedDimInfinityMult() {
 export const infinityUpgrades = {
   totalTimeMult: {
     id: "timeMult",
+    uniqueID: "infinityUpgrade1",
     cost: 1,
     description: "Antimatter Dimensions gain a multiplier based on time played",
     effect: () => Math.pow(Time.totalTimePlayed.totalMinutes / 2, 0.15),
@@ -24,6 +25,7 @@ export const infinityUpgrades = {
   },
   dim18mult: {
     id: "18Mult",
+    uniqueID: "infinityUpgrade2",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.totalTimeMult.isBought,
     description: "1st and 8th Antimatter Dimensions gain a multiplier based on Infinities",
@@ -37,6 +39,7 @@ export const infinityUpgrades = {
   },
   dim27mult: {
     id: "27Mult",
+    uniqueID: "infinityUpgrade3",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.buy10Mult.isBought,
     description: "2nd and 7th Antimatter Dimensions gain a multiplier based on Infinities",
@@ -50,6 +53,7 @@ export const infinityUpgrades = {
   },
   dim36mult: {
     id: "36Mult",
+    uniqueID: "infinityUpgrade4",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim18mult.isBought,
     description: "3rd and 6th Antimatter Dimensions gain a multiplier based on Infinities",
@@ -63,6 +67,7 @@ export const infinityUpgrades = {
   },
   dim45mult: {
     id: "45Mult",
+    uniqueID: "infinityUpgrade5",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim27mult.isBought,
     description: "4th and 5th Antimatter Dimensions gain a multiplier based on Infinities",
@@ -76,6 +81,7 @@ export const infinityUpgrades = {
   },
   resetBoost: {
     id: "resetBoost",
+    uniqueID: "infinityUpgrade6",
     cost: 1,
     checkRequirement: () => InfinityUpgrade.dim36mult.isBought,
     description: () =>
@@ -89,6 +95,7 @@ export const infinityUpgrades = {
   },
   buy10Mult: {
     id: "dimMult",
+    uniqueID: "infinityUpgrade7",
     cost: 1,
     description: () => `Increase the multiplier for buying ${formatInt(10)} Antimatter Dimensions`,
     effect: () => 1.1,
@@ -102,6 +109,7 @@ export const infinityUpgrades = {
   },
   galaxyBoost: {
     id: "galaxyBoost",
+    uniqueID: "infinityUpgrade8",
     cost: 2,
     checkRequirement: () => InfinityUpgrade.dim45mult.isBought,
     description: "All Galaxies are twice as strong",
@@ -114,6 +122,7 @@ export const infinityUpgrades = {
   },
   thisInfinityTimeMult: {
     id: "timeMult2",
+    uniqueID: "infinityUpgrade9",
     cost: 3,
     description: "Antimatter Dimensions gain a multiplier based on time spent in current Infinity",
     effect: () => Decimal.max(Math.pow(Time.thisInfinity.totalMinutes / 4, 0.25), 1),
@@ -129,6 +138,7 @@ export const infinityUpgrades = {
   },
   unspentIPMult: {
     id: "unspentBonus",
+    uniqueID: "infinityUpgrade10",
     cost: 5,
     checkRequirement: () => InfinityUpgrade.thisInfinityTimeMult.isBought,
     description: "Multiplier to 1st Antimatter Dimension based on unspent Infinity Points",
@@ -142,6 +152,7 @@ export const infinityUpgrades = {
   },
   dimboostMult: {
     id: "resetMult",
+    uniqueID: "infinityUpgrade11",
     cost: 7,
     checkRequirement: () => InfinityUpgrade.unspentIPMult.isBought,
     description: "Increase Dimension Boost multiplier",
@@ -155,6 +166,7 @@ export const infinityUpgrades = {
   },
   ipGen: {
     id: "passiveGen",
+    uniqueID: "infinityUpgrade12",
     cost: 10,
     checkRequirement: () => InfinityUpgrade.dimboostMult.isBought,
     description: () => `Passively generate Infinity Points ${formatInt(10)} times slower than your fastest Infinity`,
@@ -177,12 +189,14 @@ export const infinityUpgrades = {
   },
   skipReset1: {
     id: "skipReset1",
+    uniqueID: "infinityUpgrade13",
     cost: 20,
     description: () =>
       `Start every reset with ${formatInt(1)} Dimension Boost, automatically unlocking the 5th Antimatter Dimension`,
   },
   skipReset2: {
     id: "skipReset2",
+    uniqueID: "infinityUpgrade14",
     cost: 40,
     checkRequirement: () => InfinityUpgrade.skipReset1.isBought,
     description: () =>
@@ -190,6 +204,7 @@ export const infinityUpgrades = {
   },
   skipReset3: {
     id: "skipReset3",
+    uniqueID: "infinityUpgrade15",
     cost: 80,
     checkRequirement: () => InfinityUpgrade.skipReset2.isBought,
     description: () =>
@@ -197,6 +212,7 @@ export const infinityUpgrades = {
   },
   skipResetGalaxy: {
     id: "skipResetGalaxy",
+    uniqueID: "infinityUpgrade16",
     cost: 300,
     checkRequirement: () => InfinityUpgrade.skipReset3.isBought,
     description: () =>
@@ -205,6 +221,7 @@ export const infinityUpgrades = {
   },
   ipOffline: {
     id: "ipOffline",
+    uniqueID: "infinityUpgrade17",
     cost: 1000,
     checkRequirement: () => Achievement(41).isUnlocked,
     description: () => (player.options.offlineProgress
@@ -218,6 +235,7 @@ export const infinityUpgrades = {
   },
   ipMult: {
     id: "ipMult",
+    uniqueID: "infinityRebuyable1",
     cost: () => InfinityUpgrade.ipMult.cost,
     checkRequirement: () => Achievement(41).isUnlocked,
     costCap: DC.E6E6,

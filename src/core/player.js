@@ -760,7 +760,7 @@ window.player = {
     }
   },
   ADevil: {
-    modded: false,
+    modded: true,
     infUpgGridNames: {},
   },
   isGameEnd: false,
