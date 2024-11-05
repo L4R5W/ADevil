@@ -29,9 +29,7 @@ export default {
     };
   },
   computed: {
-    ipUpgrade() {
-      return InfinityUpgrade.ipMult;
-    },
+    ipUpgrade: () => ADevil.getRandomUpgradeOrder()[16],
     grid() {
       return ADevil.getInfinityUpgradeGrid();
     },
@@ -44,7 +42,7 @@ export default {
         "o-primary-btn--charged-respec-active": this.disCharge
       };
     },
-    offlineIpUpgrade: () => InfinityUpgrade.ipOffline
+    offlineIpUpgrade: () => ADevil.getRandomUpgradeOrder()[17]
   },
   watch: {
     isAutobuyerActive(newValue) {

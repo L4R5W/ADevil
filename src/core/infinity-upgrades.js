@@ -29,7 +29,8 @@ export class InfinityUpgradeState extends SetPurchasableMechanicState {
   }
 
   get isAvailableForPurchase() {
-    return ADevil.canBuyInfUpgrade(this.config.id);
+    if (player.ADevil.infUpgGridNames.includes(this.config.id)) return ADevil.canBuyInfUpgrade(this.config.id);
+    return true;
   }
 
   get isEffectActive() {
@@ -171,6 +172,10 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   }
 
   get canBeBought() {
+    if (player.ADevil.infUpgGridNames.includes(this.config.id)) {
+      return !Pelle.isDoomed && !this.isCapped && Currency.infinityPoints.gte(this.cost) &&
+        this.isRequirementSatisfied && ADevil.canBuyInfUpgrade(this.config.id);
+    }
     return !Pelle.isDoomed && !this.isCapped && Currency.infinityPoints.gte(this.cost) && this.isRequirementSatisfied;
   }
 

@@ -10,6 +10,11 @@ export class BreakInfinityUpgradeState extends SetPurchasableMechanicState {
     return player.infinityUpgrades;
   }
 
+  get isAvailableForPurchase() {
+    if (player.ADevil.infUpgGridNames.includes(this.config.id)) return ADevil.canBuyInfUpgrade(this.config.id);
+    return true;
+  }
+
   onPurchased() {
     if (this.id === "postGalaxy") {
       SpeedrunMilestones(7).tryComplete();
@@ -33,6 +38,11 @@ class RebuyableBreakInfinityUpgradeState extends RebuyableMechanicState {
 
   get isCapped() {
     return this.boughtAmount === this.config.maxUpgrades;
+  }
+
+  get isAvailableForPurchase() {
+    if (player.ADevil.infUpgGridNames.includes(this.config.id)) return ADevil.canBuyInfUpgrade(this.config.id);
+    return true;
   }
 
   onPurchased() {

@@ -1,5 +1,64 @@
 /* eslint-disable max-len */
+
+
+// Upgrade Rando! Breakdown:
+//  - getRandomUpgradeOrder() includes all upgrade-data (the actual objects) and gives them in a random array/order
+//      we dont do dupes because later on with 50+ upgrades and less than 10 on average per tab it would get too annoying to look for one
+//      can always go back to consider dupes using smth like "let k = Math.random()*n; for i=1,..,n add upgrade[k] to grid"
+//  - getInfinityUpgradeGrid() uses THE FIRST 16 for making the grid (needs to stay first 16 to check for purchaseable)
+//  - getBreakUpgradeGrid() uses THE NEXT 12 for making the grid
+//
+//
+//
+//
+// Antimatter
+//    Random dim rows, check if we can have dups, try to get dims from all types in a single tab
+//    Switch around galaxy and dimboost buttons
+//
+// Infinity   ---   done!
+//    16+2 upgrades; 9+3 break upgrades
+//
+// Eternity
+//    6+1 upgrades; lotta studies
+//    Change study layout AND connections
+//    Check if we can have duplicates in study tree, if not array all studies and get the list and layout from there
+//    Dilation: 10+3 upgrades; @ GalGen another 2+3
+//
+// Reality
+//    20+5 rupg; 15+10 iupg
+//    BH: 6, but at some point it'll be only 2. Need to check if we can proof on BH[1/2].isPermanent
+//    Perks will be a nightmare to switch around, ask spec maybe?
+//    Alchemy nodes? Reaction drain&outcome amount? Check if we can have duplicates (Picture: 1A+200A=2B; 2B+10C=30A; etc, gwtting 25k each will be f u n)
+//    Glyphs appearance is probably not feasible, if so disable cosmetics or dont save them
+//
+// Celestials
+//    Teresa (pour unique styling, PP shop seems doable -> rebuyable!!),
+//    Effarig (5, unique styling)
+//    Enslaved (2)
+//    V (6 or 8)
+//    Ra (probably not feasible, just switch memory-milestones with each other + all pet spots)
+//    Lai'tela (probably not feasible, just switch singularity-milestones with each other + DMD rows + Annihilation)
+//    Pelle (5 rebuyables, lot of upgrades, 5/10 buyable/visible; @ GalGen another 5 rebuyables, also switch rift bar milestones?)
+//
+// Maybe change so automator commands are unlocked by default/from achievements/ressource amounts
+// Potentially add chance of {prestige} yielding appropriate amount of {prestige-1}; picture eternity-ing gives IP
+//
+//
 export const ADevil = {
+  allUpgrades() {
+    return [
+      InfinityUpgrade.totalTimeMult, InfinityUpgrade.dim18mult, InfinityUpgrade.dim36mult, InfinityUpgrade.resetBoost,
+      InfinityUpgrade.buy10Mult, InfinityUpgrade.dim27mult, InfinityUpgrade.dim45mult, InfinityUpgrade.galaxyBoost,
+      InfinityUpgrade.thisInfinityTimeMult, InfinityUpgrade.unspentIPMult, InfinityUpgrade.dimboostMult,
+      InfinityUpgrade.ipGen, InfinityUpgrade.skipReset1, InfinityUpgrade.skipReset2, InfinityUpgrade.skipReset3,
+      InfinityUpgrade.skipResetGalaxy,
+      InfinityUpgrade.ipOffline, InfinityUpgrade.ipMult,
+      BreakInfinityUpgrade.totalAMMult, BreakInfinityUpgrade.currentAMMult, BreakInfinityUpgrade.galaxyBoost,
+      BreakInfinityUpgrade.infinitiedMult, BreakInfinityUpgrade.achievementMult, BreakInfinityUpgrade.slowestChallengeMult,
+      BreakInfinityUpgrade.infinitiedGen, BreakInfinityUpgrade.autobuyMaxDimboosts, BreakInfinityUpgrade.autobuyerSpeed,
+      BreakInfinityUpgrade.tickspeedCostMult, BreakInfinityUpgrade.dimCostMult, BreakInfinityUpgrade.ipGen
+    ];
+  },
   randomIndex(array) {
     let type = array;
     // Start with infinity upgrades for now
@@ -26,36 +85,49 @@ export const ADevil = {
     }
     return array;
   },
-  getInfinityUpgradeGrid() {
-    let upgrades = [
-      InfinityUpgrade.totalTimeMult, InfinityUpgrade.dim18mult, InfinityUpgrade.dim36mult, InfinityUpgrade.resetBoost,
-      InfinityUpgrade.buy10Mult, InfinityUpgrade.dim27mult, InfinityUpgrade.dim45mult, InfinityUpgrade.galaxyBoost,
-      InfinityUpgrade.thisInfinityTimeMult, InfinityUpgrade.unspentIPMult, InfinityUpgrade.dimboostMult,
-      InfinityUpgrade.ipGen, InfinityUpgrade.skipReset1, InfinityUpgrade.skipReset2, InfinityUpgrade.skipReset3,
-      InfinityUpgrade.skipResetGalaxy
-    ];
+  getRandomUpgradeOrder() {
+    let upgrades = ADevil.allUpgrades();
     upgrades = ADevil.shuffleArray(upgrades);
+
+    return upgrades;
+  },
+  getInfinityUpgradeGrid() {
+    const upgrades = ADevil.getRandomUpgradeOrder();
     const names = [];
     for (let i = 0; i < 16; i++) {
       names.push(upgrades[i].config.id);
     }
     player.ADevil.infUpgGridNames = names;
-    const cl1 = upgrades.splice(0, 4);
-    const cl2 = upgrades.splice(0, 4);
-    const cl3 = upgrades.splice(0, 4);
-    const cl4 = upgrades;
 
-    return [
-      cl1, cl2, cl3, cl4
+    const column1 = upgrades.splice(0, 4);
+    const column2 = upgrades.splice(0, 4);
+    const column3 = upgrades.splice(0, 4);
+    const column4 = upgrades.splice(0, 4);
+
+    const InfUpgGrid = [
+      column1, column2, column3, column4
     ];
+    return InfUpgGrid;
   },
-  canBuyInfUpgrade(array) {
+  getBreakUpgradeGrid() {
+    const upgrades = ADevil.getRandomUpgradeOrder();
+    const row1 = upgrades.splice(0, 3);
+    const row2 = upgrades.splice(0, 3);
+    const row3 = upgrades.splice(0, 3);
+    const row4 = upgrades.splice(0, 3);
+
+    const InfUpgGrid = [
+      row1, row2, row3, row4
+    ];
+    return InfUpgGrid;
+  },
+  canBuyInfUpgrade(upgradeConfig) {
     const upgrades = player.ADevil.infUpgGridNames;
 
     let number = 0;
     let rangeLow = 0;
     for (let i = 0; i < 16; i++) {
-      if (upgrades[i] === array) {
+      if (upgrades[i] === upgradeConfig) {
         number = i;
         rangeLow = 4 * Math.floor(number / 4);
       }
@@ -64,7 +136,7 @@ export const ADevil = {
     for (let j = rangeLow; j < number; j++) {
       upgradesToCheck.push(upgrades[j]);
     }
-    if (InfinityUpgrade.all.filter(u => upgradesToCheck.includes(u.id) && u.isBought).length === number - rangeLow) return true;
+    if (ADevil.allUpgrades().filter(u => upgradesToCheck.includes(u.id) && u.isBought).length === number - rangeLow) return true;
     return false;
   },
   randomDimTier(dimType) {

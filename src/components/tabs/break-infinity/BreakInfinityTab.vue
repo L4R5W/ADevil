@@ -15,29 +15,8 @@ export default {
   },
   computed: {
     grid() {
-      return [
-        [
-          BreakInfinityUpgrade.totalAMMult,
-          BreakInfinityUpgrade.currentAMMult,
-          BreakInfinityUpgrade.galaxyBoost,
-        ],
-        [
-          BreakInfinityUpgrade.infinitiedMult,
-          BreakInfinityUpgrade.achievementMult,
-          BreakInfinityUpgrade.slowestChallengeMult,
-        ],
-        [
-          BreakInfinityUpgrade.infinitiedGen,
-          BreakInfinityUpgrade.autobuyMaxDimboosts,
-          BreakInfinityUpgrade.autobuyerSpeed
-        ],
-        [
-          BreakInfinityUpgrade.tickspeedCostMult,
-          BreakInfinityUpgrade.dimCostMult,
-          BreakInfinityUpgrade.ipGen
-        ]
-      ];
-    }
+      return ADevil.getBreakUpgradeGrid();
+    },
   },
   methods: {
     update() {
